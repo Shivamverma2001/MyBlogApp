@@ -1,0 +1,30 @@
+h1{
+    text-align: center;
+    font-size: 4rem;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 7rem;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+input{
+    height: 2rem;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+textarea{
+    margin: 1rem 0;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+}
+.btn>input{
+    background-color: white;
+    width: 8rem;
+    height: 2.5rem;
+}
