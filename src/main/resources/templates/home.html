@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+<navbar class="navbar">
+    <h1>My Blog Application</h1>
+    <div class="search-btn">
+        <div class="search">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search">
+        </div>
+        <div class="login">
+            <a href="">Login</a>
+        </div>
+    </div>
+</navbar>
+<main class="main">
+    <section class="post" th:each="post:${posts}">
+        <h2 th:text="${post.title}"></h2>
+        <p class="name-date">
+                <span class="name" th:text="${post.excerpt}">
+                </span>
+            <span class="date" th:text="${post.createdAt}">
+                </span>
+        </p><br><br>
+        <p th:text="${#strings.substring(post.content, 0, 300)}"></p>
+        <section class="button">
+            <form th:action="@{'/post' + ${post.id}}">
+                <input class="blog-btn" type="submit" value="View">
+            </form>
+            <form th:action="@{/newPost}">
+                <input class="blog-btn"  type="submit" value="Edit">
+            </form>
+            <form th:action="@{'/delete' + ${post.id}}">
+                <input class="blog-btn"  type="submit" value="Delete">
+            </form>
+        </section>
+    </section>
+</main>
+</body>
+
+</html>

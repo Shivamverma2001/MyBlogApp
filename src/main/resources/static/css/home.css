@@ -34,8 +34,29 @@ h1{
     display: grid;
     grid-template-columns: auto auto;
     grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
 }
 .post{
     padding: 1rem ;
     border: 1px solid black;
+}
+.button{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+}
+.name-date{
+    font-size:.7rem;
+}
+.button>form{
+    padding:0;
+}
+.blog-btn{
+    margin:1rem;
+    background-color:black;
+    color:white;
+    padding:5px;
+    font-size:1rem;
+    width:8rem;
+    border:none;
 }

@@ -1,0 +1,51 @@
+body{
+    padding: 10px 2rem 0 2rem;
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-btn{
+    display: flex;
+    justify-content: space-around;
+    width: 20%;
+}
+h1{
+    width: 80%;
+}
+
+.login>a{
+    text-decoration: none;
+    font-weight: 500;
+    color: rgb(0, 217, 255);
+}
+.main{
+    width:90%;
+    height:85vh;
+    main:60%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.post{
+    width:80%;
+    height:100%;
+    padding: 3rem ;
+    border: 1px solid black;
+}
+.post>h1{
+    width:100%;
+    font-size:3rem;
+    text-align:center;
+    margin-bottom:.1rem;
+}
+.post>.name-date{
+    text-align:center;
+    margin-bottom:3rem;
+}
+.post>.content{
+    font-size:1.5rem;
+}

@@ -1,6 +1,8 @@
-package com.sv.myblogapp.model;
+package com.sv.myblogapp.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Entity
@@ -19,13 +21,16 @@ public class Post {
     @Column(name = "author")
     String author;
     @Column(name = "published_at")
-    String published_at;
+    @CreationTimestamp
+    String publishedAt;
     @Column(name = "is_published")
-    boolean is_published;
+    boolean isPublished =true;
     @Column(name = "created_at")
-    String created_at;
+    @CreationTimestamp
+    String createdAt;
     @Column(name = "updated_at")
-    String updated_at;
+    @UpdateTimestamp
+    String updatedAt;
 
     public int getId() {
         return id;
@@ -67,51 +72,47 @@ public class Post {
         this.author = author;
     }
 
-    public String getPublished_at() {
-        return published_at;
+    public String getPublishedAt() {
+        return publishedAt;
     }
 
-    public void setPublished_at(String published_at) {
-        this.published_at = published_at;
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
-    public boolean isIs_published() {
-        return is_published;
+    public boolean isPublished() {
+        return isPublished;
     }
 
-    public void setIs_published(boolean is_published) {
-        this.is_published = is_published;
+    public void setPublished(boolean published) {
+        this.isPublished = published;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
     public Post(){
 
     }
 
-    public Post(String title, String excerpt, String content, String author, String published_at, boolean is_published,
-                String created_at, String updated_at) {
+    public Post(String title, String excerpt, String content, String author, boolean isPublished) {
         this.title = title;
         this.excerpt = excerpt;
         this.content = content;
         this.author = author;
-        this.published_at = published_at;
-        this.is_published = is_published;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.isPublished = isPublished;
     }
 
     @Override
@@ -122,10 +123,10 @@ public class Post {
                 ", excerpt='" + excerpt + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
-                ", published_at='" + published_at + '\'' +
-                ", is_published=" + is_published +
-                ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
+                ", published_at='" + publishedAt + '\'' +
+                ", is_published=" + isPublished +
+                ", created_at='" + createdAt + '\'' +
+                ", updated_at='" + updatedAt + '\'' +
                 '}';
     }
 }
