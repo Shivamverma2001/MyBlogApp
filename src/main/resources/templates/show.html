@@ -23,7 +23,8 @@
         <h1 th:text="${post.title}"></h1>
         <p class="name-date">
                 <span class="name" th:text="${post.excerpt}"/>
-            <span class="date" th:text="${post.createdAt}"/>
+                <span class="date" th:text="${post.createdAt}"/><br>
+                <span class="date" th:text="${post.author}"/>
         </p>
         <p class="content" th:text="${post.content}"></p>
         </section>

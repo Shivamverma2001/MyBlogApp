@@ -19,14 +19,13 @@
 
 <body>
 <h1>New post</h1>
-<form th:action="@{/newpostprocess}" th:object="${post}" method="post">
-    <input type="text" placeholder="Title" th:field="*{title}">
-    <input type="text" placeholder="excerpt" th:field="*{excerpt}">
-    <input type="text" placeholder="author" th:field="*{author}">
-    <input type="text" placeholder="tags" th:field="*{tagsAsString}">
+<form th:action="@{'/editPost/' + ${post.id}}" th:object="${post}" method="post">
+    <input type="text" th:field="*{title}">
+    <input type="text" th:field="*{excerpt}">
+    <input type="text" th:field="*{author}">
     <textarea cols="100" rows="30" th:field="*{content}"></textarea>
     <div class="btn">
-        <input type="submit" value="Publish">
+        <input type="submit" value="Update">
     </div>
 </form>
 </body>

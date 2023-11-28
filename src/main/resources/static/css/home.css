@@ -60,3 +60,14 @@ h1{
     width:8rem;
     border:none;
 }
+.tags{
+    display:flex;
+    justify-content:center;
+}
+.tag{
+    border:1px dotted black;
+    padding:5px;
+    font-size:1rem;
+    font-weight:400;
+    margin:5px;
+}

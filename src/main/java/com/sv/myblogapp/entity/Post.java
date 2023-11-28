@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -11,26 +14,46 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
-    @Column(name ="title")
-    String title;
+    private int id;
+
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "excerpt")
-    String excerpt;
+    private String excerpt;
+
     @Column(name = "content")
-    String content;
+    private String content;
+
     @Column(name = "author")
-    String author;
+    private String author;
+
     @Column(name = "published_at")
     @CreationTimestamp
-    String publishedAt;
+    private LocalDateTime publishedAt;
+
     @Column(name = "is_published")
-    boolean isPublished =true;
+    private boolean isPublished = true;
+
     @Column(name = "created_at")
     @CreationTimestamp
-    String createdAt;
+    private LocalDateTime createdAt;
+
     @Column(name = "updated_at")
     @UpdateTimestamp
-    String updatedAt;
+    private LocalDateTime updatedAt;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
+
+    @Transient
+    private String tagsAsString;
 
     public int getId() {
         return id;
@@ -72,11 +95,11 @@ public class Post {
         this.author = author;
     }
 
-    public String getPublishedAt() {
+    public LocalDateTime getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(LocalDateTime publishedAt) {
         this.publishedAt = publishedAt;
     }
 
@@ -88,23 +111,47 @@ public class Post {
         this.isPublished = published;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public Post(){
 
+    public List<String> getTags() {
+        return tagsAsString != null ? List.of(tagsAsString.split(","))
+                : new ArrayList<>();
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public String getTagsAsString() {
+        return tagsAsString;
+    }
+
+    public void setTagsAsString(String tagsAsString) {
+        this.tagsAsString = tagsAsString;
+    }
+
+    public void addTag(Tag tag) {
+        if (tags == null) {
+            tags = new ArrayList<>();
+        }
+        tags.add(tag);
+    }
+
+    public Post() {
     }
 
     public Post(String title, String excerpt, String content, String author, boolean isPublished) {
@@ -123,10 +170,11 @@ public class Post {
                 ", excerpt='" + excerpt + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
-                ", published_at='" + publishedAt + '\'' +
-                ", is_published=" + isPublished +
-                ", created_at='" + createdAt + '\'' +
-                ", updated_at='" + updatedAt + '\'' +
+                ", publishedAt=" + publishedAt +
+                ", isPublished=" + isPublished +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", tags=" + tags +
                 '}';
     }
 }

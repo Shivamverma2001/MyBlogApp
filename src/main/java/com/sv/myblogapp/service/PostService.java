@@ -10,4 +10,5 @@ public interface PostService {
     List<Post> findAll();
     List<Post> findAllById(int id);
     public void deleteById(int id);
+    public void updateById(Post post);
 }
