@@ -20,10 +20,14 @@ public class Comment {
     @Column(name = "published_at")
     @CreationTimestamp
     private String publishedAt;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private String createdAt;
     @Column(name = "updated_at")
     @UpdateTimestamp
     private String updatedAt;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "post_id")
     private Post post;
 
@@ -63,8 +67,16 @@ public class Comment {
         return publishedAt;
     }
 
-    public void setCreatedAt(String publishedAt) {
+    public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getUpdatedAt() {

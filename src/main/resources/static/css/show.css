@@ -23,13 +23,14 @@ h1{
 }
 .main{
     width:90%;
-    height:85vh;
+    height:70vh;
     main:60%;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     position:relative;
+    margin-bottom:10px
 }
 .post{
     width:80%;
@@ -84,4 +85,30 @@ h1{
     font-size:1rem;
     font-weight:400;
     margin:5px;
+}
+.comment-main{
+    width:50%;
+    main:60%;
+    display:flex;
+    flex-direction:column;
+    align-items:space-between;
+    justify-content:space-between;
+    position:relative;
+    margin-bottom:20px;
+    border: 1px solid black;
+    margin-left:6vw;
+    padding:5px 10px;
+}
+.com{
+    width:90%;
+    text-align:center;
+}
+.comment-btn{
+    right:0;
+}
+.add-comment{
+    border:1px dashed black;
+    padding:5px 10px;
+    margin-left:6vw;
+    width:77%;
 }

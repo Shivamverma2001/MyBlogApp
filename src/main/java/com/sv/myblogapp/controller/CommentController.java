@@ -7,6 +7,7 @@ import com.sv.myblogapp.service.PostService;
 import com.sv.myblogapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,5 +40,15 @@ public class CommentController {
 
         postService.updateById(currentPost);
         return "redirect:/post/{id}";
+    }
+    @GetMapping("/deleteComment/{id}")
+    public String deleteComment(@PathVariable Integer id, Model model){
+        commentService.deleteById(id);
+        return "redirect:/";
+    }
+    @GetMapping("/editComment/{id}")
+    public String editComment(@PathVariable Integer id,Model model){
+        Comment comment=commentService.findCommentById(id);
+
     }
 }

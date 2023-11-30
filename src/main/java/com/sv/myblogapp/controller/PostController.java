@@ -66,9 +66,11 @@ public class PostController {
         List<Post> posts=postService.findAllById((int)id);
 
         Set<Tag> tags = posts.get(0).getTags();
+        List<Comment> comments=posts.get(0).getComments();
         System.out.println(tags);
         model.addAttribute("post",posts.get(0));
         model.addAttribute("tags",tags);
+        model.addAttribute("comments",comments);
         return "show";
     }
     @GetMapping("/delete/{id}")
