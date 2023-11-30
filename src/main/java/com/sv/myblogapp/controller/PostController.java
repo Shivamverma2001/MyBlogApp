@@ -1,5 +1,6 @@
 package com.sv.myblogapp.controller;
 
+import com.sv.myblogapp.entity.Comment;
 import com.sv.myblogapp.entity.Post;
 import com.sv.myblogapp.entity.Tag;
 import com.sv.myblogapp.service.PostService;
@@ -17,6 +18,7 @@ public class PostController {
     PostService postService;
     @Autowired
     TagService tagService;
+
 
     public PostController(PostService postService,TagService tagService){
         this.postService=postService;
@@ -78,6 +80,9 @@ public class PostController {
     public String edit(@PathVariable Integer id, Model model){
         List<Post> posts=postService.findAllById((int)id);
         Set<Tag> tags=posts.get(0).getTags();
+        String commenterName = null;
+        String email=null;
+        String message=null;
         System.out.println(tags);
         StringBuilder tagName= new StringBuilder("");
         for(Tag tag:tags){
@@ -88,7 +93,9 @@ public class PostController {
         return "updatePost";
     }
     @RequestMapping("/editPost/{id}")
-    public String editPost(@PathVariable("id") Integer id,@ModelAttribute("post") Post updatedPost,@RequestParam("tagName") String updatedTagName){
+    public String editPost
+            (@PathVariable("id") Integer id,
+             @ModelAttribute("post") Post updatedPost,@RequestParam("tagName") String updatedTagName){
         System.out.println(updatedTagName);
         List<Post> posts=postService.findAllById((int)id);
         Post currentPost=posts.get(0);

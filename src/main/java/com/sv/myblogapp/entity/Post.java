@@ -50,6 +50,8 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
 
     public Integer getId() {
@@ -132,12 +134,25 @@ public class Post {
         this.tags = tags;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public void addTag(Tag tag) {
         if (tags == null) {
             tags = new HashSet<>();
         }
         tags.add(tag);
+    }
+    public void addComment(Comment comment){
+        if(comments==null){
+            comments=new ArrayList<>();
+        }
+        comments.add(comment);
     }
 
     public Post() {

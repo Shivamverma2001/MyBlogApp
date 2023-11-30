@@ -29,8 +29,25 @@
         <h2>Tags</h2>
         <span th:each="tag : ${tags}" th:text="${tag.name} + ' '"></span>
         <p class="content" th:text="${post.content}"></p>
+        <section class="button">
+            <form th:action="@{'/edit/' + ${post.id}}">
+                <input class="blog-btn"  type="submit" value="Edit">
+            </form>
+            <form th:action="@{'/delete/' + ${post.id}}">
+                <input class="blog-btn"  type="submit" value="Delete">
+            </form>
+        </section>
     </section>
 </main>
+<section class="comment">
+    <h1>Comment</h1>
+    <form th:action="@{'/newComment/'+ ${post.id}}">
+        <input type="text" name="commenterName" th:value="${commenterName}" placeholder="Enter your name">
+        <input type="text" name="email" th:value="${email}" placeholder="Enter your email">
+        <input type="text" name="message" th:value="${message}" placeholder="Enter your comment">
+        <input class="blog-btn"  type="submit" value="Add">
+    </form>
+</section>
 </body>
 
 </html>

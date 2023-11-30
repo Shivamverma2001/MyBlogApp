@@ -9,6 +9,7 @@ public interface PostService {
     public void addPost(Post post);
     List<Post> findAll();
     List<Post> findAllById(int id);
+    Post findById(int id);
     public void deleteById(int id);
     public void updateById(Post post);
 }
