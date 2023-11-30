@@ -36,7 +36,9 @@
         <p>
         <h3>Tags</h3>
         <div class="tags">
-            <span class="tag" th:each="tag:${post.tags}" th:text="${tag.name}"></span>
+            <span class="tag" th:each="tag: ${post.tags}">
+                <span th:text="${tag.name}"></span>
+            </span>
         </div>
         </p>
         <section class="button">

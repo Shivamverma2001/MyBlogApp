@@ -23,7 +23,7 @@
     <input type="text" placeholder="Title" th:field="*{title}">
     <input type="text" placeholder="excerpt" th:field="*{excerpt}">
     <input type="text" placeholder="author" th:field="*{author}">
-    <input type="text" placeholder="tags" th:field="*{tagsAsString}">
+    <input type="text" placeholder="tags" th:field="${tag.name}">
     <textarea cols="100" rows="30" th:field="*{content}"></textarea>
     <div class="btn">
         <input type="submit" value="Publish">

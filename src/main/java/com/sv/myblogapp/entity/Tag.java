@@ -12,7 +12,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "name")
     private String name;
     @Column(name = "created_at")
@@ -21,14 +21,20 @@ public class Tag {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Date updatedAt;
-    @ManyToMany(mappedBy = "tags")
-    private List<Post> posts;
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private List<Post> posts=new ArrayList<>();;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -65,9 +71,6 @@ public class Tag {
     }
 
     public void addPost(Post post){
-        if (posts==null){
-            posts=new ArrayList<>();
-        }
         posts.add(post);
     }
     public Tag(){}

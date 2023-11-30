@@ -5,8 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "posts")
@@ -14,7 +13,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "title")
     private String title;
@@ -43,23 +42,21 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     @JoinTable(
             name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
-    @Transient
-    private String tagsAsString;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -127,26 +124,18 @@ public class Post {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getTags() {
-        return tagsAsString != null ? List.of(tagsAsString.split(","))
-                : new ArrayList<>();
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
-    public String getTagsAsString() {
-        return tagsAsString;
-    }
-
-    public void setTagsAsString(String tagsAsString) {
-        this.tagsAsString = tagsAsString;
-    }
 
     public void addTag(Tag tag) {
         if (tags == null) {
-            tags = new ArrayList<>();
+            tags = new HashSet<>();
         }
         tags.add(tag);
     }

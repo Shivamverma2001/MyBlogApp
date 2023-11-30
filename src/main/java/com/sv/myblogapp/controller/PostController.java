@@ -9,8 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class PostController {
@@ -26,33 +25,48 @@ public class PostController {
     @RequestMapping("/")
     public String blogPostLandingPage(Model model){
         model.addAttribute("posts",postService.findAll());
-        model.addAttribute("tags",tagService.findAllTags());
         return "home";
     }
     @RequestMapping("/newpost")
     public String createPost(Model model){
         Post post=new Post();
+        Tag tag=new Tag();
         model.addAttribute("post",post);
+        model.addAttribute("tag",tag);
         return "createPost";
     }
     @PostMapping("/newpostprocess")
-    public String show(@ModelAttribute("post") Post post){
-        postService.addPost(post);
+    public String show(@ModelAttribute("post") Post post,@ModelAttribute("tag") Tag newTag){
+        Map<String,Tag> tempTags=new HashMap<>();
+        List<Tag> allTags=tagService.findAllTags();
 
-        List<String> tags=  post.getTags();
-
-        for(String tagName:tags){
-            Tag tag = new Tag();
-            tag.setName(tagName);
-            tagService.addTag(tag);
+        for(Tag tag:allTags){
+            String name= tag.getName();
+            tempTags.put(name,tag);
+        }
+        String[] tagsArray = newTag.getName().split(",");
+        for(String tempTag: tagsArray){
+            if(tempTags.containsKey(tempTag)){
+                post.addTag(tempTags.get(tempTag));
+            }
+            else {
+                tempTag = tempTag.trim();
+                Tag tag = new Tag(tempTag);
+                post.addTag(tag);
+            }
         }
 
-        return "createPost";
+        postService.addPost(post);
+        return "redirect:/";
     }
     @GetMapping("/post/{id}")
     public String show(@PathVariable Integer id, Model model){
         List<Post> posts=postService.findAllById((int)id);
+
+        Set<Tag> tags = posts.get(0).getTags();
+        System.out.println(tags);
         model.addAttribute("post",posts.get(0));
+        model.addAttribute("tags",tags);
         return "show";
     }
     @GetMapping("/delete/{id}")
@@ -63,11 +77,19 @@ public class PostController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         List<Post> posts=postService.findAllById((int)id);
+        Set<Tag> tags=posts.get(0).getTags();
+        System.out.println(tags);
+        StringBuilder tagName= new StringBuilder("");
+        for(Tag tag:tags){
+            tagName.append(tag.getName()).append(",");
+        }
         model.addAttribute("post",posts.get(0));
+        model.addAttribute("tagName",tagName);
         return "updatePost";
     }
     @RequestMapping("/editPost/{id}")
-    public String editPost(@PathVariable("id") Integer id,@ModelAttribute("post") Post updatedPost){
+    public String editPost(@PathVariable("id") Integer id,@ModelAttribute("post") Post updatedPost,@RequestParam("tagName") String updatedTagName){
+        System.out.println(updatedTagName);
         List<Post> posts=postService.findAllById((int)id);
         Post currentPost=posts.get(0);
 
@@ -76,7 +98,22 @@ public class PostController {
         currentPost.setTitle(updatedPost.getTitle());
         currentPost.setContent(updatedPost.getContent());
 
+        Set<Tag> tags=currentPost.getTags();
+        Set<Tag> newTags=new HashSet<>();
+        String []tagsName=updatedTagName.split(",");
+
+        for (String tagName:tagsName){
+            if (!tags.contains(tagName)){
+                Tag newTag=new Tag(tagName);
+                newTags.add(newTag);
+            }
+        }
+        currentPost.setTags(newTags);
+
         postService.updateById(currentPost);
+
         return "redirect:/";
+
+
     }
 }
