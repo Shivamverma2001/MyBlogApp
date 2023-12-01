@@ -22,7 +22,7 @@
     <section class="post">
         <h1 th:text="${post.title}"></h1>
         <p class="name-date">
-            <span class="name" th:text="${post.excerpt}"></span>
+            <span class="name" th:text="${post.excerpt}"></span><br>
             <span class="date" th:text="${post.createdAt}"></span><br>
             <span class="author" th:text="${post.author}"></span>
         </p>
@@ -46,8 +46,7 @@
         <p class="name-date">
             <span class="name" th:text="${comment.name}"></span><br>
             <span class="date" th:text="${comment.email}"></span><br>
-            <b>Published at </b><span class="author" th:text="${comment.publishedAt}"></span><br>
-            <b>Created at </b><span class="author" th:text="${comment.createdAt}"></span>
+            <b>Updated at </b><span class="author" th:text="${comment.updatedAt}"></span>
             <input type="hidden" th:field="${post.id}">
         </p>
         <section class="button comment-btn">

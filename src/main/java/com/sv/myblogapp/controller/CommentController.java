@@ -8,10 +8,7 @@ import com.sv.myblogapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,6 +46,18 @@ public class CommentController {
     @GetMapping("/editComment/{id}")
     public String editComment(@PathVariable Integer id,Model model){
         Comment comment=commentService.findCommentById(id);
+        model.addAttribute("comment",comment);
+        return "editComment";
+    }
+    @PostMapping("/editCommentProcess/{id}")
+    public String editCommentProcess(@PathVariable Integer id,Model model,@ModelAttribute("comment") String updatedComment){
+        System.out.println(updatedComment);
+        System.out.println("----------------------------------------------------------------------------------------------------------");
+        Comment comment=commentService.findCommentById(id);
+        comment.setId(id);
+        comment.setComment(updatedComment);
 
+        commentService.add(comment);
+        return "redirect:/";
     }
 }

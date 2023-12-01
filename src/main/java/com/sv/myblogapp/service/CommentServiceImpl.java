@@ -17,6 +17,11 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public void add(Comment comment) {
+        commentRepository.save(comment);
+    }
+
+    @Override
     public void deleteById(int id) {
         Comment comment = commentRepository.findById(id).orElse(null);
         if (comment != null) {
