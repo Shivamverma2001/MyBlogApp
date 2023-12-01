@@ -6,6 +6,7 @@ import com.sv.myblogapp.entity.Tag;
 import com.sv.myblogapp.service.PostService;
 import com.sv.myblogapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,7 @@ public class PostController {
     }
     @RequestMapping("/")
     public String blogPostLandingPage(Model model){
-        model.addAttribute("posts",postService.findAll());
-        return "home";
+        return findPaginated(1,"title","asc",model);
     }
     @RequestMapping("/newpost")
     public String createPost(Model model){
@@ -122,7 +122,20 @@ public class PostController {
         postService.updateById(currentPost);
 
         return "redirect:/";
+    }
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated
+            (@PathVariable(value="pageNo") int pageNo,@RequestParam("sortField") String sortField,
+             @RequestParam("sortDir") String sortDir, Model model){
+        int pageSize=4;
+        Page<Post> page=postService.findPaginated(pageNo,pageSize,sortField,sortDir);
 
-
+        model.addAttribute("currentPage",pageNo);
+        model.addAttribute("totalPages",page.getTotalPages());
+        model.addAttribute("totalItems",page.getTotalElements());
+        model.addAttribute("posts",page.getContent());
+        model.addAttribute("sortField",sortField);
+        model.addAttribute("sortDir",sortDir);
+        return "home";
     }
 }
