@@ -27,22 +27,22 @@
 <nav class="navbar2">
     <form th:action="@{'/searchByTags/'+${currentPage}+'?tags='+${tags}+'?sortField=publishedAt&sortDir=asc'}" method="get">
         <input type="text" name="tags" placeholder="Tags by comma-separated" th:value="${tags}">
-        <input type="submit" value="Apply">
+        <input type="submit" value="Apply" class="blog-btn">
     </form>
-    <select id="sortDropdown" onchange="location = this.value;" name="sortField">
+    <select id="sortDropdown" onchange="location = this.value;" name="sortField" class="blog-btn">
         <option>Sort By:</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=publishedAt&sortDir=' + ${sortDir}}">Published Date</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=author&sortDir=' + ${sortDir}}">Author</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=title&sortDir=' + ${sortDir}}">Title</option>
     </select>
 
-    <select id="orderDropdown" onchange="location = this.value;" name="sortDir">
+    <select id="orderDropdown" onchange="location = this.value;" name="sortDir" class="blog-btn">
         <option>Order By:</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=asc'}">Ascending Order</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=desc'}">Descending Order</option>
     </select>
     <form th:action="@{/newpost}" method="get">
-        <input type="submit" value="Add Post">
+        <input type="submit" value="Add Post" class="blog-btn">
     </form>
 </nav>
 

@@ -147,8 +147,6 @@ public class PostController {
             @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir,
             Model model) {
         int pageSize = 4;
-
-        // Perform the search operation based on tags
         Page<Post> page = postService.searchByTagsPaginated(tags, pageNo, pageSize, sortField, sortDir);
         System.out.println(page);
         model.addAttribute("currentPage", pageNo);

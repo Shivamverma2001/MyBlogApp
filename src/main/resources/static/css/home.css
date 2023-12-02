@@ -78,5 +78,9 @@ h1{
     margin:5px;
 }
 .navbar2{
+    margin-top:10px;
+    margin-left:45%;
+    width:50%;
     display:flex;
+    justify-content:space-between;
 }
