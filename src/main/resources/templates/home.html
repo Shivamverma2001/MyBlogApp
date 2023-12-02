@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -25,50 +25,51 @@
     </div>
 </navbar>
 <nav class="navbar2">
-    <select id="sortDropdown" onchange="location = this.value;" th:name="sortField">
+    <form th:action="@{'/searchByTags/'+${currentPage}+'?tags='+${tags}+'?sortField=publishedAt&sortDir=asc'}" method="get">
+        <input type="text" name="tags" placeholder="Tags by comma-separated" th:value="${tags}">
+        <input type="submit" value="Apply">
+    </form>
+    <select id="sortDropdown" onchange="location = this.value;" name="sortField">
         <option>Sort By:</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=publishedAt&sortDir=' + ${sortDir}}">Published Date</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=author&sortDir=' + ${sortDir}}">Author</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=title&sortDir=' + ${sortDir}}">Title</option>
     </select>
 
-    <select id="orderDropdown" onchange="location = this.value;" th:name="sortDir">
-        <option>Oder By:</option>
+    <select id="orderDropdown" onchange="location = this.value;" name="sortDir">
+        <option>Order By:</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=asc'}">Ascending Order</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=desc'}">Descending Order</option>
     </select>
+    <form th:action="@{/newpost}" method="get">
+        <input type="submit" value="Add Post">
+    </form>
 </nav>
-
-
-
 
 <main class="main">
     <section class="post" th:each="post:${posts}">
         <h2 th:text="${post.title}"></h2>
         <p class="name-date">
-                <span class="name" th:text="${post.excerpt}">
-                </span><br>
-                 <span class="date" th:text="${post.createdAt}">
-                </span><br>
-                <span class="name" th:text="${post.author}">
-                </span>
+            <span class="name" th:text="${post.excerpt}"></span><br>
+            <span class="date" th:text="${post.createdAt}"></span><br>
+            <span class="name" th:text="${post.author}"></span>
         </p><br><br>
         <p>
         <h3>Tags</h3>
         <div class="tags">
-            <span class="tag" th:each="tag: ${post.tags}">
-                <span th:text="${tag.name}"></span>
-            </span>
+                    <span class="tag" th:each="tag: ${post.tags}">
+                        <span th:text="${tag.name}"></span>
+                    </span>
         </div>
         </p>
         <section class="button">
-            <form th:action="@{'/post/' + ${post.id}}">
+            <form th:action="@{'/post/' + ${post.id}}" method="get">
                 <input class="blog-btn" type="submit" value="View">
             </form>
-            <form th:action="@{'/edit/' + ${post.id}}">
+            <form th:action="@{'/edit/' + ${post.id}}" method="get">
                 <input class="blog-btn"  type="submit" value="Edit">
             </form>
-            <form th:action="@{'/delete/' + ${post.id}}">
+            <form th:action="@{'/delete/' + ${post.id}}" method="post">
                 <input class="blog-btn"  type="submit" value="Delete">
             </form>
         </section>
@@ -79,13 +80,12 @@
                 Total Rows: [[${totalItems}]]
             </div>
             <div class="col-sm-1">
-            <span th:each="i:${#numbers.sequence(1,totalPages)}">
-                <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">
-                    [[${i}]]
-                </a>
-
-                <span th:unless="${currentPage != i}">[[${i}]]</span>&nbsp;&nbsp;
-            </span>
+                    <span th:each="i:${#numbers.sequence(1,totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">
+                            [[${i}]]
+                        </a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span>&nbsp;&nbsp;
+                    </span>
             </div>
             <div class="col-sm-1">
                 <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${currentPage+1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
@@ -101,7 +101,6 @@
             </div>
         </div>
     </div>
-
 </main>
 </body>
 
