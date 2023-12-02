@@ -24,9 +24,24 @@
         </div>
     </div>
 </navbar>
-<navbar class="navbar2">
-    Filter:
-</navbar>
+<nav class="navbar2">
+    <select id="sortDropdown" onchange="location = this.value;" th:name="sortField">
+        <option>Sort By:</option>
+        <option th:value="@{'/page/'+${currentPage}+'?sortField=publishedAt&sortDir=' + ${sortDir}}">Published Date</option>
+        <option th:value="@{'/page/'+${currentPage}+'?sortField=author&sortDir=' + ${sortDir}}">Author</option>
+        <option th:value="@{'/page/'+${currentPage}+'?sortField=title&sortDir=' + ${sortDir}}">Title</option>
+    </select>
+
+    <select id="orderDropdown" onchange="location = this.value;" th:name="sortDir">
+        <option>Oder By:</option>
+        <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=asc'}">Ascending Order</option>
+        <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=desc'}">Descending Order</option>
+    </select>
+</nav>
+
+
+
+
 <main class="main">
     <section class="post" th:each="post:${posts}">
         <h2 th:text="${post.title}"></h2>
@@ -58,35 +73,35 @@
             </form>
         </section>
     </section>
-    <div th:if="${totalPages>1}">
-        <div class="row col-sm-10">
-            <div class="co-sm-2">
-                Total Rows:[[${totalItems}]]
+    <div th:if="${totalPages > 1}">
+        <div class="row col-sm-12">
+            <div class="col-sm-2">
+                Total Rows: [[${totalItems}]]
             </div>
             <div class="col-sm-1">
             <span th:each="i:${#numbers.sequence(1,totalPages)}">
-                <a th:if="${currentPage!=i}" th:href="@{'/page/'+${i}}">
+                <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">
                     [[${i}]]
                 </a>
-                <span th:unless="${currentPage!=i}">[[${i}]]</span>&nbsp;&nbsp;
+
+                <span th:unless="${currentPage != i}">[[${i}]]</span>&nbsp;&nbsp;
             </span>
             </div>
             <div class="col-sm-1">
-                <a th:if="${currentPage<totalPages}" th:href="@{'/page/'+${currentPage+1}}">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${currentPage+1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
                     Next
                 </a>
-                <span th:unless="${currentPage<totalPages}">Next</span>&nbsp;&nbsp;
-                </span>
+                <span th:unless="${currentPage < totalPages}">Next</span>&nbsp;&nbsp;
             </div>
             <div class="col-sm-1">
-                <a th:if="${currentPage<totalPages}" th:href="@{'/page/'+${totalPages}}">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${totalPages}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
                     Last
                 </a>
-                <span th:unless="${currentPage<totalPages}">Last</span>&nbsp;&nbsp;
-                </span>
+                <span th:unless="${currentPage < totalPages}">Last</span>&nbsp;&nbsp;
             </div>
         </div>
     </div>
+
 </main>
 </body>
 

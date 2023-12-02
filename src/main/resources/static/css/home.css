@@ -77,3 +77,6 @@ h1{
     font-weight:400;
     margin:5px;
 }
+.navbar2{
+    display:flex;
+}
