@@ -32,6 +32,9 @@
         <input type="text" name="tags" placeholder="Tags by comma-separated" th:value="${tags}">
         <input type="submit" value="Apply" class="blog-btn">
     </form>
+    <form th:action="@{/}">
+        <input type="submit" value="Clear" class="blog-btn">
+    </form>
     <select id="sortDropdown" onchange="location = this.value;" name="sortField" class="blog-btn">
         <option>Sort By:</option>
         <option th:value="@{'/page/'+${currentPage}+'?sortField=publishedAt&sortDir=' + ${sortDir}}">Published Date</option>
