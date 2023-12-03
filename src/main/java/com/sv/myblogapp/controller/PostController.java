@@ -125,19 +125,14 @@ public class PostController {
     }
     @GetMapping("/page/{pageNo}")
     public String findPaginated
-            (@PathVariable(value="pageNo") int pageNo,@RequestParam("sortField") String sortField,
+            (@PathVariable(value="pageNo") int pageNo,
+             @RequestParam("sortField") String sortField,
              @RequestParam("sortDir") String sortDir, Model model){
+
         int pageSize=4;
         Page<Post> page=postService.findPaginated(pageNo,pageSize,sortField,sortDir);
 
-        model.addAttribute("currentPage",pageNo);
-        model.addAttribute("totalPages",page.getTotalPages());
-        model.addAttribute("totalItems",page.getTotalElements());
-        model.addAttribute("posts",page.getContent());
-        model.addAttribute("sortField",sortField);
-        model.addAttribute("sortDir",sortDir);
-        model.addAttribute("tags", null);
-        return "home";
+        return paginated(pageNo,page,sortField,sortDir,model);
     }
     @GetMapping("/searchByTags/{pageNo}")
     public String searchByTags(
@@ -146,16 +141,11 @@ public class PostController {
             @RequestParam(name = "sortField", defaultValue = "publishedAt") String sortField,
             @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir,
             Model model) {
+
         int pageSize = 4;
         Page<Post> page = postService.searchByTagsPaginated(tags, pageNo, pageSize, sortField, sortDir);
-        System.out.println(page);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("posts", page.getContent());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        return "home";
+
+        return paginated(pageNo,page,sortField,sortDir,model);
     }
     @GetMapping("/searchByString/{pageNo}")
     public String searchByString(
@@ -165,15 +155,21 @@ public class PostController {
             @RequestParam(name = "sortField", defaultValue = "publishedAt") String sortField,
             @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir,
             Model model) {
+
         int pageSize = 4;
         Page<Post> page = postService.searchByStringPaginated(searchString, pageNo, pageSize, sortField, sortDir);
-        System.out.println(page);
+
+        return paginated(pageNo,page,sortField,sortDir,model);
+    }
+    public String paginated(int pageNo,Page<Post> page,String sortField,String sortDir,Model model){
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("posts", page.getContent());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
+
         return "home";
     }
 }
