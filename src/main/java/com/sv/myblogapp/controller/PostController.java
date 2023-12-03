@@ -157,4 +157,23 @@ public class PostController {
         model.addAttribute("sortDir", sortDir);
         return "home";
     }
+    @GetMapping("/searchByString/{pageNo}")
+    public String searchByString(
+            @RequestParam(name = "searchString",required = false) String searchString,
+            @RequestParam(name = "tags", required = false) String tags,
+            @PathVariable(value = "pageNo") int pageNo,
+            @RequestParam(name = "sortField", defaultValue = "publishedAt") String sortField,
+            @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir,
+            Model model) {
+        int pageSize = 4;
+        Page<Post> page = postService.searchByStringPaginated(searchString, pageNo, pageSize, sortField, sortDir);
+        System.out.println(page);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("posts", page.getContent());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        return "home";
+    }
 }

@@ -75,4 +75,10 @@ public class PostServiceImpl implements PostService{
         PageRequest page = PageRequest.of(pageNo - 1, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortField));
         return postRepository.findByTagNamesIn(name, page);
     }
+    public Page<Post> searchByStringPaginated(String searchString, int pageNo, int pageSize, String sortField, String sortDir) {
+        return postRepository.findByTitleContainingOrAuthorContainingOrExcerptContainingOrContentContaining(
+                searchString, searchString, searchString, searchString,
+                PageRequest.of(pageNo - 1, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortField))
+        );
+    }
 }

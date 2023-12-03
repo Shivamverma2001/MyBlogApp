@@ -16,4 +16,5 @@ public interface PostService {
     public void updateById(Post post);
     public Page<Post> findPaginated(int pageNo,int pageSize,String sortField,String sortDirection);
     public Page<Post> searchByTagsPaginated(String tags,int pageNo,int pageSize, String sortField, String sortDir);
+    public Page<Post> searchByStringPaginated(String searchString, int pageNo, int pageSize, String sortField, String sortDir);
 }

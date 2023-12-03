@@ -19,12 +19,15 @@ h1{
     border: 1px solid black;
     border-radius: 25px;
     box-sizing: border-box;
+    display:flex;
     padding: 2px;
     font-size: 1rem;
 }
 .search>i{
     color:white;
     border:none;
+    margin-right:3px;
+    align-items:center;
 }
 .search>input{
     border: none;

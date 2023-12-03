@@ -17,7 +17,10 @@
     <div class="search-btn">
         <div class="search">
             <i class="fa fa-search" aria-hidden="true"></i>
-            <input type="text" placeholder="Search">
+            <form th:action="@{'/searchByString/'+${currentPage}}" method="get">
+             <input type="text" placeholder="Search" name="searchString" th:value="${searchString}">
+             <input type="submit" hidden="hidden" display="none">
+            </form>
         </div>
         <div class="login">
             <a href="">Login</a>
@@ -25,7 +28,7 @@
     </div>
 </navbar>
 <nav class="navbar2">
-    <form th:action="@{'/searchByTags/'+${currentPage}+'?tags='+${tags}+'?sortField=publishedAt&sortDir=asc'}" method="get">
+    <form th:action="@{'/searchByTags/'+${currentPage}}" method="get">
         <input type="text" name="tags" placeholder="Tags by comma-separated" th:value="${tags}">
         <input type="submit" value="Apply" class="blog-btn">
     </form>
