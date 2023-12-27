@@ -10,64 +10,64 @@
 </head>
 
 <body>
-<navbar class="navbar">
-    <h1>My Blog Application</h1>
-    <div class="search-btn">
-        <div class="login">
-            <a href="">Login</a>
+    <navbar class="navbar">
+        <h1>My Blog Application</h1>
+        <div class="search-btn">
+            <div class="login">
+                <a href="">Login</a>
+            </div>
         </div>
-    </div>
-</navbar>
-<main class="main">
-    <section class="post">
-        <h1 th:text="${post.title}"></h1>
-        <p class="name-date">
-            <span class="name" th:text="${post.excerpt}"></span><br>
-            <span class="date" th:text="${post.createdAt}"></span><br>
-            <span class="author" th:text="${post.author}"></span>
-        </p>
-        <h2>Tags</h2>
-        <span th:each="tag : ${tags}" th:text="${tag.name} + ' '"></span>
-        <p class="content" th:text="${post.content}"></p>
-        <section class="button">
-            <form th:action="@{'/edit/' + ${post.id}}">
-                <input class="blog-btn"  type="submit" value="Edit">
-            </form>
-            <form th:action="@{'/delete/' + ${post.id}}">
-                <input class="blog-btn"  type="submit" value="Delete">
-            </form>
+    </navbar>
+    <main class="main">
+        <section class="post">
+            <h1 th:text="${post.title}"></h1>
+            <p class="name-date">
+                <span class="name" th:text="${post.excerpt}"></span><br>
+                <span class="date" th:text="${post.createdAt}"></span><br>
+                <span class="author" th:text="${post.author}"></span>
+            </p>
+            <h2>Tags</h2>
+            <span th:each="tag : ${tags}" th:text="${tag.name} + ' '"></span>
+            <p class="content" th:text="${post.content}"></p>
+            <section class="button">
+                <form th:action="@{'/edit/' + ${post.id}}">
+                    <input class="blog-btn" type="submit" value="Edit">
+                </form>
+                <form th:action="@{'/delete/' + ${post.id}}">
+                    <input class="blog-btn" type="submit" value="Delete">
+                </form>
+            </section>
         </section>
-    </section>
-</main>
-<h1 class="com">Comment</h1>
-<main class="comment-main" th:each="comment:${comments}">
-    <section class="comment">
-        <h1 th:text="${comment.comment}"></h1>
-        <p class="name-date">
-            <span class="name" th:text="${comment.name}"></span><br>
-            <span class="date" th:text="${comment.email}"></span><br>
-            <b>Updated at </b><span class="author" th:text="${comment.updatedAt}"></span>
-            <input type="hidden" th:field="${post.id}">
-        </p>
-        <section class="button comment-btn">
-            <form th:action="@{'/editComment/' + ${comment.id}}">
-                <input class="blog-btn"  type="submit" value="Edit">
-            </form>
-            <form th:action="@{'/deleteComment/' + ${comment.id}}">
-                <input class="blog-btn"  type="submit" value="Delete">
-            </form>
+    </main>
+    <h1 class="com">Comment</h1>
+    <main class="comment-main" th:each="comment:${comments}">
+        <section class="comment">
+            <h1 th:text="${comment.comment}"></h1>
+            <p class="name-date">
+                <span class="name" th:text="${comment.name}"></span><br>
+                <span class="date" th:text="${comment.email}"></span><br>
+                <b>Updated at </b><span class="author" th:text="${comment.updatedAt}"></span>
+                <input type="hidden" th:field="${post.id}">
+            </p>
+            <section class="button comment-btn">
+                <form th:action="@{'/editComment/' + ${comment.id}}">
+                    <input class="blog-btn" type="submit" value="Edit">
+                </form>
+                <form th:action="@{'/deleteComment/' + ${comment.id}}">
+                    <input class="blog-btn" type="submit" value="Delete">
+                </form>
+            </section>
         </section>
+    </main>
+    <section class="add-comment">
+        <h2>Add Comment</h2>
+        <form th:action="@{'/newComment/'+ ${post.id}}">
+            <input type="text" name="commenterName" th:value="${commenterName}" placeholder="Enter your name">
+            <input type="text" name="email" th:value="${email}" placeholder="Enter your email">
+            <input type="text" name="message" th:value="${message}" placeholder="Enter your comment">
+            <input class="blog-btn" type="submit" value="Add">
+        </form>
     </section>
-</main>
-<section class="add-comment">
-    <h2>Add Comment</h2>
-    <form th:action="@{'/newComment/'+ ${post.id}}">
-        <input type="text" name="commenterName" th:value="${commenterName}" placeholder="Enter your name">
-        <input type="text" name="email" th:value="${email}" placeholder="Enter your email">
-        <input type="text" name="message" th:value="${message}" placeholder="Enter your comment">
-        <input class="blog-btn"  type="submit" value="Add">
-    </form>
-</section>
 </body>
 
 </html>

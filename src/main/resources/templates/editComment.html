@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Create Post</title>
 </head>
+
 <body>
 
 </body>
-</html><!DOCTYPE html>
+
+</html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -15,16 +19,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Blog Application</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" th:href="@{/css/createPost.css}"></head>
+  <link rel="stylesheet" th:href="@{/css/createPost.css}">
+</head>
 
 <body>
-<h1>Edit Comment</h1>
-<form th:action="@{'/editCommentProcess/' + ${comment.id}}" th:object="${comment}" method="post">
-  <input type="text" placeholder="message" th:field="*{comment}">
-  <div class="btn">
-    <input type="submit" value="Update">
-  </div>
-</form>
+  <h1>Edit Comment</h1>
+  <form th:action="@{'/editCommentProcess/' + ${comment.id}}" th:object="${comment}" method="post">
+    <input type="text" placeholder="message" th:field="*{comment}">
+    <div class="btn">
+      <input type="submit" value="Update">
+    </div>
+  </form>
 </body>
 
 </html>

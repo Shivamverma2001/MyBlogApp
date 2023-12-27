@@ -7,107 +7,114 @@
     <title>My Blog Application</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 
 <body>
-<navbar class="navbar">
-    <h1>My Blog Application</h1>
-    <div class="search-btn">
-        <div class="search">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <form th:action="@{'/searchByString/'+${currentPage}}" method="get">
-             <input type="text" placeholder="Search" name="searchString" th:value="${searchString}">
-             <input type="submit" hidden="hidden" display="none">
-            </form>
-        </div>
-        <div class="login">
-            <a href="">Login</a>
-        </div>
-    </div>
-</navbar>
-<nav class="navbar2">
-    <form th:action="@{'/searchByTags/'+${currentPage}}" method="get">
-        <input type="text" name="tags" placeholder="Tags by comma-separated" th:value="${tags}">
-        <input type="submit" value="Apply" class="blog-btn">
-    </form>
-    <form th:action="@{/}">
-        <input type="submit" value="Clear" class="blog-btn">
-    </form>
-    <select id="sortDropdown" onchange="location = this.value;" name="sortField" class="blog-btn">
-        <option>Sort By:</option>
-        <option th:value="@{'/page/'+${currentPage}+'?sortField=publishedAt&sortDir=' + ${sortDir}}">Published Date</option>
-        <option th:value="@{'/page/'+${currentPage}+'?sortField=author&sortDir=' + ${sortDir}}">Author</option>
-        <option th:value="@{'/page/'+${currentPage}+'?sortField=title&sortDir=' + ${sortDir}}">Title</option>
-    </select>
-
-    <select id="orderDropdown" onchange="location = this.value;" name="sortDir" class="blog-btn">
-        <option>Order By:</option>
-        <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=asc'}">Ascending Order</option>
-        <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=desc'}">Descending Order</option>
-    </select>
-    <form th:action="@{/newpost}" method="get">
-        <input type="submit" value="Add Post" class="blog-btn">
-    </form>
-</nav>
-
-<main class="main">
-    <section class="post" th:each="post:${posts}">
-        <h2 th:text="${post.title}"></h2>
-        <p class="name-date">
-            <span class="name" th:text="${post.excerpt}"></span><br>
-            <span class="date" th:text="${post.createdAt}"></span><br>
-            <span class="name" th:text="${post.author}"></span>
-        </p><br><br>
-        <p>
-        <h3>Tags</h3>
-        <div class="tags">
-                    <span class="tag" th:each="tag: ${post.tags}">
-                        <span th:text="${tag.name}"></span>
-                    </span>
-        </div>
-        </p>
-        <section class="button">
-            <form th:action="@{'/post/' + ${post.id}}" method="get">
-                <input class="blog-btn" type="submit" value="View">
-            </form>
-            <form th:action="@{'/edit/' + ${post.id}}" method="get">
-                <input class="blog-btn"  type="submit" value="Edit">
-            </form>
-            <form th:action="@{'/delete/' + ${post.id}}" method="post">
-                <input class="blog-btn"  type="submit" value="Delete">
-            </form>
-        </section>
-    </section>
-    <div th:if="${totalPages > 1}">
-        <div class="row col-sm-12">
-            <div class="col-sm-2">
-                Total Rows: [[${totalItems}]]
+    <navbar class="navbar">
+        <h1>My Blog Application</h1>
+        <div class="search-btn">
+            <div class="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <form th:action="@{'/searchByString/'+${currentPage}}" method="get">
+                    <input type="text" placeholder="Search" name="searchString" th:value="${searchString}">
+                    <input type="submit" hidden="hidden" display="none">
+                </form>
             </div>
-            <div class="col-sm-1">
+            <div class="login">
+                <a href="">Login</a>
+            </div>
+        </div>
+    </navbar>
+    <nav class="navbar2">
+        <form th:action="@{'/searchByTags/'+${currentPage}}" method="get">
+            <input type="text" name="tags" placeholder="Tags by comma-separated" th:value="${tags}">
+            <input type="submit" value="Apply" class="blog-btn">
+        </form>
+        <form th:action="@{/}">
+            <input type="submit" value="Clear" class="blog-btn">
+        </form>
+        <select id="sortDropdown" onchange="location = this.value;" name="sortField" class="blog-btn">
+            <option>Sort By:</option>
+            <option th:value="@{'/page/'+${currentPage}+'?sortField=publishedAt&sortDir=' + ${sortDir}}">
+                Published Date
+            </option>
+            <option th:value="@{'/page/'+${currentPage}+'?sortField=author&sortDir=' + ${sortDir}}">Author</option>
+            <option th:value="@{'/page/'+${currentPage}+'?sortField=title&sortDir=' + ${sortDir}}">Title</option>
+        </select>
+
+        <select id="orderDropdown" onchange="location = this.value;" name="sortDir" class="blog-btn">
+            <option>Order By:</option>
+            <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=asc'}">Ascending Order
+            </option>
+            <option th:value="@{'/page/'+${currentPage}+'?sortField=' + ${sortField} + '&sortDir=desc'}">Descending
+                Order</option>
+        </select>
+        <form th:action="@{/newpost}" method="get">
+            <input type="submit" value="Add Post" class="blog-btn">
+        </form>
+    </nav>
+
+    <main class="main">
+        <section class="post" th:each="post:${posts}">
+            <h2 th:text="${post.title}"></h2>
+            <p class="name-date">
+                <span class="name" th:text="${post.excerpt}"></span><br>
+                <span class="date" th:text="${post.createdAt}"></span><br>
+                <span class="name" th:text="${post.author}"></span>
+            </p><br><br>
+            <p>
+            <h3>Tags</h3>
+            <div class="tags">
+                <span class="tag" th:each="tag: ${post.tags}">
+                    <span th:text="${tag.name}"></span>
+                </span>
+            </div>
+            </p>
+            <section class="button">
+                <form th:action="@{'/post/' + ${post.id}}" method="get">
+                    <input class="blog-btn" type="submit" value="View">
+                </form>
+                <form th:action="@{'/edit/' + ${post.id}}" method="get">
+                    <input class="blog-btn" type="submit" value="Edit">
+                </form>
+                <form th:action="@{'/delete/' + ${post.id}}" method="get">
+                    <input class="blog-btn" type="submit" value="Delete">
+                </form>
+            </section>
+        </section>
+        <div th:if="${totalPages > 1}">
+            <div class="row col-sm-12">
+                <div class="col-sm-2">
+                    Total Rows: [[${totalItems}]]
+                </div>
+                <div class="col-sm-1">
                     <span th:each="i:${#numbers.sequence(1,totalPages)}">
-                        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">
+                        <a th:if="${currentPage != i}"
+                            th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">
                             [[${i}]]
                         </a>
                         <span th:unless="${currentPage != i}">[[${i}]]</span>&nbsp;&nbsp;
                     </span>
-            </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${currentPage+1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-                    Next
-                </a>
-                <span th:unless="${currentPage < totalPages}">Next</span>&nbsp;&nbsp;
-            </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${totalPages}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-                    Last
-                </a>
-                <span th:unless="${currentPage < totalPages}">Last</span>&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}"
+                        th:href="@{'/page/'+${currentPage+1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                        Next
+                    </a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}"
+                        th:href="@{'/page/'+${totalPages}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                        Last
+                    </a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>&nbsp;&nbsp;
+                </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 </body>
 
 </html>
