@@ -23,13 +23,13 @@
 </head>
 
 <body>
-    <h1>New post</h1>
+    <h1>Edit post</h1>
     <form th:action="@{'/editPost/' + ${post.id}}" th:object="${post}" method="post">
         <input type="text" th:field="*{title}">
         <input type="text" th:field="*{excerpt}">
         <input type="text" th:field="*{author}">
         <input type="text" name="tagName" th:value="${tagName}">
-        <textarea cols="100" rows="30" th:field="*{content}"></textarea>
+        <textarea cols="100" rows="10" th:field="*{content}"></textarea>
         <div class="btn">
             <input type="submit" value="Update">
         </div>
