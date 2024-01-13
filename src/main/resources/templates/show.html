@@ -42,7 +42,7 @@
     <h1 class="com">Comment</h1>
     <main class="comment-main" th:each="comment:${comments}">
         <section class="comment">
-            <h1 th:text="${comment.comment}"></h1>
+            <h1 th:text="${comment.comment}" class="h"></h1>
             <p class="name-date">
                 <span class="name" th:text="${comment.name}"></span><br>
                 <span class="date" th:text="${comment.email}"></span><br>
